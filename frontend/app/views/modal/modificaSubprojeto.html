@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{subprojeto.nome}}</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaSubProjetoForm">
+        <div class="form-group">
+            <label class="control-label col-sm-2">MI:</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <input type="text" class="form-control" name="mi" placeholder="Pesquisa por MI" ng-model="miAdd">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="pesquisaMi()">Pesquisar</button>
+                </span>
+            </div>
+        </div>
+     </div>
+     <div class="panel panel-default" style = "margin-top: 1em" ng-show="listaBuscaMi.length > 0">
+        <div class="panel-body">
+              <table class="table table-hover table-responsive" width="100%">
+                <thead>
+                   <tr>
+                      <th>MI</th>
+                      <th>INOM</th>
+                      <th>Escala</th>
+                      <th>Asc</th>
+                   </tr>
+                </thead>
+                 <tbody>
+                    <tr ng-repeat="mi in listaBuscaMi | orderBy: 'properties.escala' track by $index" ng-click="addMi(mi)">
+                      <td>{{ mi.properties.mi }}</td>
+                      <td>{{ mi.properties.inom }}</td>
+                      <td>{{ mi.properties.escala }}</td>
+                      <td>{{ mi.properties.asc }}</td>
+                    </tr>
+                 </tbody>
+              </table>
+           </div>
+     </div>
+     <div class="panel panel-default" style = "margin-top: 1em">
+        <div class="panel-heading">MI Adicionados</div>
+        <div class="panel-body">
+          <div ng-show="subprojeto.tarefas.length > 0">
+            <table class="table table-hover table-responsive" width="100%">
+              <thead>
+                 <tr>
+                    <th>MI</th>
+                    <th>INOM</th>
+                    <th>Escala</th>
+                    <th>Asc</th>
+                 </tr>
+              </thead>
+               <tbody>
+                  <tr ng-repeat="tarefa in subprojeto.tarefas | orderBy: 'escala' track by $index">
+                    <td>{{ tarefa.mi }}</td>
+                    <td>{{ tarefa.inom }}</td>
+                    <td>{{ tarefa.escala }}</td>
+                    <td>{{ tarefa.asc }}</td>
+                  </tr>
+               </tbody>
+            </table>
+           </div>
+        </div>
+     </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaProjetoForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="modal-header">
+    <h3 class="modal-title">Novo Subprojeto</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaSubProjetoForm">
+        <div ng-show ="page == 1">
+          <div class="form-group">
+              <label class="control-label col-sm-2">Nome</label>
+              <div class="col-sm-10" ng-class="{ 'has-error': criaSubProjetoForm.nome.$touched && criaSubProjetoForm.nome.$invalid }">
+                  <input type="text" class="form-control" name="nome" placeholder="Nome do Subprojeto" ng-model="subprojeto.nome" validate-subprojeto="{{subprojeto.nome}}" required>
+                  <div ng-messages="criaSubProjetoForm.nome.$error" ng-if="criaSubProjetoForm.nome.$touched">
+                      <p style="color: red" ng-message="required">Preencha o nome do SubProjeto</p>
+                      <p style="color: red" ng-message="nome">Nome inválido</p>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">Projeto</label>
+            <div class="col-sm-10">
+                <select ng-model="subprojeto.projeto" ng-options="projeto.nome for projeto in projetos" required></select>
+            </div>
+          </div>
+       </div>
+       <div ng-show ="page == 2">
+         <div class="form-group">
+           <label class="control-label col-sm-2">Subfases</label>
+           <div class="col-sm-10">
+               <select ng-model="subfaseAdd" ng-options="subfase.nome for subfase in subfases"></select>
+               <button class="btn btn-default btn-xs" type="button" ng-click="addSubfase()">Adicionar</button>
+           </div>
+         </div>
+         <div class="form-group">
+         <ul ui-sortable ng-model="listaSubfases">
+           <li ng-repeat="item in listaSubfases track by $index">{{ item.nome }}</li>
+         </ul>
+       </div>
+      </div>
+      <div ng-show ="page == 3">
+        <div class="form-group">
+            <label class="control-label col-sm-2">MI:</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <input type="text" class="form-control" name="mi" placeholder="Pesquisa por MI" ng-model="miAdd">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="pesquisaMi()">Pesquisar</button>
+                </span>
+            </div>
+        </div>
+     </div>
+     <div class="panel panel-default" style = "margin-top: 1em" ng-show="listaBuscaMi.length > 0">
+        <div class="panel-body">
+              <table class="table table-hover table-responsive" width="100%">
+                <thead>
+                   <tr>
+                      <th>MI</th>
+                      <th>INOM</th>
+                      <th>Escala</th>
+                      <th>Asc</th>
+                   </tr>
+                </thead>
+                 <tbody>
+                    <tr ng-repeat="mi in listaBuscaMi | orderBy: 'properties.escala' track by $index" ng-click="addMi(mi)">
+                      <td>{{ mi.properties.mi }}</td>
+                      <td>{{ mi.properties.inom }}</td>
+                      <td>{{ mi.properties.escala }}</td>
+                      <td>{{ mi.properties.asc }}</td>
+                    </tr>
+                 </tbody>
+              </table>
+           </div>
+     </div>
+     <div class="panel panel-default" style = "margin-top: 1em">
+        <div class="panel-heading">MI Adicionados</div>
+        <div class="panel-body">
+          <div ng-show="subprojeto.tarefas.length > 0">
+            <table class="table table-hover table-responsive" width="100%">
+              <thead>
+                 <tr>
+                    <th>MI</th>
+                    <th>INOM</th>
+                    <th>Escala</th>
+                    <th>Asc</th>
+                 </tr>
+              </thead>
+               <tbody>
+                  <tr ng-repeat="tarefa in subprojeto.tarefas | orderBy: 'escala' track by $index">
+                    <td>{{ tarefa.mi }}</td>
+                    <td>{{ tarefa.inom }}</td>
+                    <td>{{ tarefa.escala }}</td>
+                    <td>{{ tarefa.asc }}</td>
+                  </tr>
+               </tbody>
+            </table>
+           </div>
+        </div>
+     </div>
+   </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaProjetoForm.$invalid" type="button" ng-click="anterior()" ng-show="page != 1">Anterior</button>
+        <button class="btn btn-primary" ng-disabled="criaProjetoForm.$invalid" type="button" ng-click="proximo()" ng-show="page != 3">Próximo</button>
+        <button class="btn btn-primary" ng-disabled="criaProjetoForm.$invalid" type="button" ng-click="finaliza()" ng-show="page == 3">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

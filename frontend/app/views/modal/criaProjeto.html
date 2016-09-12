@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">Novo Projeto</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaProjetoForm">
+      <div class="form-group">
+          <label class="control-label col-sm-2">Nome</label>
+          <div class="col-sm-10" ng-class="{ 'has-error': criaProjetoForm.nome.$touched && criaProjetoForm.nome.$invalid }">
+              <input type="text" class="form-control" name="nome" placeholder="Nome do Projeto" ng-model="projeto.nome" validate-projeto="{{projeto.nome}}" required>
+              <div ng-messages="criaProjetoForm.nome.$error" ng-if="criaProjetoForm.nome.$touched">
+                  <p style="color: red" ng-message="required">Preencha o nome da secão</p>
+                  <p style="color: red" ng-message="nome">Nome inválido</p>
+              </div>
+          </div>
+      </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaProjetoForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

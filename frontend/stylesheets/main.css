@@ -1,0 +1,316 @@
+/* source-sans-pro-regular - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/source-sans-pro-v9-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'),
+       url('../fonts/source-sans-pro-v9-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-sans-pro-v9-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v9-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-sans-pro-v9-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-sans-pro-v9-latin-regular.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #F5F7FA;
+    font-family: "Source Sans Pro", sans-serif;
+    color: #000000;
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+.jumbotron {
+    color: #000000;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: transparent  !important;
+}
+
+
+.nome_principal{
+  font-weight:bold;
+  color:#FFFFFF;
+  font-size: 20px;
+}
+
+.logo_1dl{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+  }
+
+.login_1dl{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.topnavbar {
+  background-color: #1797be;
+  background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%)
+  background-repeat: repeat-x;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 121;
+}
+
+.side-menu {
+  background-color: #3A3F51;
+  padding-top: 55px;
+  height: 100%;
+  width: 220px;
+  overflow: hidden;
+}
+
+#aside {
+  position: absolute;
+  width: 220px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 116;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-color: #ffffff;
+}
+
+.main-area {
+  position: relative;
+  height: 100%;
+  margin-left: 0;
+  z-index: 111;
+  background-color: #f5f7fa;
+  /*  margin-bottom: 0 !important;*/
+  margin-left: 220px;
+  margin-top: 60px;
+  overflow: hidden;
+
+}
+
+
+.content {
+  padding: 20px;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  margin-top: -1px;
+  overflow: hidden !important;
+  display: block;
+}
+
+.content:after{
+  box-sizing: border-box;
+}
+
+.content:before{
+  box-sizing: border-box;
+}
+
+.panel-default > .panel-heading-custom {
+  background: #1797be;
+  color: #FFFFFF;
+}
+
+.pagination{
+  width: auto;
+  display: inline-block;
+}
+
+.btn .glyphicon {
+  margin-right: 8px;
+}
+
+.btn.btn-icon .glyphicon {
+  margin-right: 0;
+}
+
+/*MENU LATERAL*/
+
+.side-menu ul,
+.side-menu li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  line-height: 45px;
+  cursor: pointer;
+}
+
+.side-menu ul .active,
+.side-menu li .active {
+  border-left: 6px solid #1C87AB;
+  background-color: #4f5b69;
+}
+
+.side-menu ul .sub-menu li a,
+.side-menu li .sub-menu li a {
+  margin-left: 20px;
+}
+.side-menu ul .sub-menu li,
+.side-menu li .sub-menu li {
+  background-color: #2B3042;
+  border: none;
+  line-height: 45px;
+  margin-left: 0px;
+}
+.side-menu ul .sub-menu li:hover,
+.side-menu li .sub-menu li:hover {
+  background-color: #4f5b69;
+}
+
+.side-menu li {
+  padding-left: 0px;
+}
+.side-menu li a {
+  display:block;
+  text-decoration: none;
+  color: #D0D1D3;
+}
+.side-menu li a i {
+  padding-left: 10px;
+  width: 20px;
+  padding-right: 20px;
+}
+.side-menu li:hover {
+  border-left: 6px solid #1C87AB;
+  background-color: #4f5b69;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.side-menu li a:hover,
+.side-menu li a:focus  {
+  color: #1C87AB;
+}
+
+.side-menu .menu-list .menu-content {
+    display: block;
+}
+
+
+/*LOGIN CSS*/
+.logo {
+  padding-bottom: 15px;
+  font-size: 25px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.login-form-1 {
+  max-width: 300px;
+  border-radius: 5px;
+  display: inline-block;
+}
+.main-login-form {
+  position: relative;
+}
+.login-form-1 .form-control {
+  border: 0;
+  box-shadow: 0 0 0;
+  border-radius: 0;
+  background: transparent;
+  color: #555555;
+  padding: 7px 0;
+  font-weight: bold;
+  font-size: 15px;
+  height:auto;
+}
+.login-form-1 .form-control::-webkit-input-placeholder {
+  color: #999999;
+}
+.login-form-1 .form-control:-moz-placeholder,
+.login-form-1 .form-control::-moz-placeholder,
+.login-form-1 .form-control:-ms-input-placeholder {
+  color: #999999;
+}
+.login-form-1 .form-group {
+  margin-bottom: 0;
+  border-bottom: 2px solid #efefef;
+  padding-right: 20px;
+  position: relative;
+}
+.login-form-1 .form-group:last-child {
+  border-bottom: 0;
+}
+.login-group {
+  background: #ffffff;
+  color: #999999;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+.login-group-checkbox {
+  padding: 5px 0;
+}
+/*=== 5. Login Button ===*/
+.login-form-1 .login-button {
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  background: #ffffff;
+  color: #999999;
+  padding: 11px 0;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  border: 5px solid #efefef;
+  border-radius: 50%;
+  transition: all ease-in-out 500ms;
+}
+.login-form-1 .login-button:hover {
+  color: #555555;
+  transform: rotate(450deg);
+}
+.login-form-1 .login-button.clicked {
+  color: #555555;
+}
+.login-form-1 .login-button.clicked:hover {
+  transform: none;
+}
+.login-form-1 .login-button.clicked.success {
+  color: #2ecc71;
+}
+.login-form-1 .login-button.clicked.error {
+  color: #e74c3c;
+}
+
+/*ABA DE LOGOUT*/
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+
+}
+.navbar-footer
+{
+    background-color:#DDD;
+}
+.navbar-footer-content { padding:15px 15px 15px 15px; }
+.dropdown-menu {
+padding: 0px;
+overflow: hidden;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}

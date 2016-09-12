@@ -1,0 +1,24 @@
+<div class="panel panel-default" style = "margin-top: 1em">
+   <div class="panel-heading panel-heading-custom">Seções</div>
+   <div class="panel-body">
+     <div ng-show="secoes.length > 0">
+         <table class="table table-hover table-responsive" width="100%">
+           <thead>
+              <tr>
+                 <th>Nome</th>
+              </tr>
+           </thead>
+            <tbody>
+               <tr ng-repeat="secao in secoes track by $index" ng-click="criaSecao(secao)">
+                 <td>{{ secao.nome }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+       <strong>Existem {{secoes.length}} seções</strong>
+   </div>
+</div>
+
+<button type="button" class="btn btn-default" ng-click="criaSecao()" data-toggle="tooltip" title="Adicionar nova Seção">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Adicionar nova Seção
+</button>

@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{ativ.tarefa.mi}} - {{ativ.subfase.nome}}</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaAtivForm">
+    <div class="form-group">
+      <label class="control-label col-sm-2">Operadores</label>
+      <div class="col-sm-10">
+        <ui-select multiple tagging="tagTransform" tagging-label="new tag" ng-model="ativ.filaOperador" theme="select2" ng-disabled="disabled" style="width: 400px;">
+          <ui-select-match placeholder="Selecione uma ou mais usuarios">{{$item.postGrad}} {{$item.nomeGuerra}}</ui-select-match>
+          <ui-select-choices repeat="usuario in usuarios | propsFilter: {nome: $select.search}">
+            <small>
+              {{usuario.postGrad}} {{usuario.nomeGuerra}}
+            </small>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Prioridade</label>
+        <div class="col-sm-10">
+            <input type="number" min="1" class="form-control" placeholder="Nome" ng-model="ativ.prioridade" required>
+        </div>
+    </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaAtivForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

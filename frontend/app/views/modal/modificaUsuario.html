@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{usuario.nomeGuerra}}</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaUsuarioForm">
+
+    <div class="form-group">
+      <label class="control-label col-sm-2">Funcões</label>
+      <div class="col-sm-10">
+        <ui-select multiple tagging="tagTransform" tagging-label="new tag" ng-model="usuario.listaFuncoes" theme="select2" ng-disabled="disabled" style="width: 400px;">
+          <ui-select-match placeholder="Selecione uma ou mais funções">{{$item.nome}} ({{$item.secao.nome}})</ui-select-match>
+          <ui-select-choices repeat="funcao in funcoes | propsFilter: {nome: $select.search}">
+            <small>
+              {{funcao.nome}}
+            </small>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaUsuarioForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

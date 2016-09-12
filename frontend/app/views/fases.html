@@ -1,0 +1,24 @@
+<div class="panel panel-default" style = "margin-top: 1em">
+   <div class="panel-heading panel-heading-custom">Fases</div>
+   <div class="panel-body">
+     <div ng-show="fases.length > 0">
+         <table class="table table-hover table-responsive" width="100%">
+           <thead>
+              <tr>
+                 <th>Nome</th>
+              </tr>
+           </thead>
+            <tbody>
+                <tr ng-repeat="fase in fases track by $index" ng-click="criaFase(fase)">
+                <td>{{ fase.nome }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+       <strong>Existem {{fases.length}} fases</strong>
+   </div>
+</div>
+
+<button type="button" class="btn btn-default" ng-click="criaFase()" data-toggle="tooltip" title="Adicionar nova Fase">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Adicionar nova Fase
+</button>

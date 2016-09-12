@@ -1,0 +1,54 @@
+<div class="panel panel-default" style = "margin-top: 1em">
+   <div class="panel-heading panel-heading-custom">Usuários - {{secao.nome}}</div>
+   <div class="panel-body">
+     <div ng-show="usuarios.length > 0">
+       <div class="row">
+         <div class="col-md-6">
+           <label for="">Mostrar
+             <select class="form-control pagination" ng-model="numPerPage" ng-options="numPage for numPage in numsForPage" ng-change="changeNum(numPerPage);"></select>
+             itens por página
+           </label>
+         </div>
+         <div class="col-md-6 text-right">
+           <div class="form-inline form-group">
+             <label for="filter-list"></label>
+             <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+                <input type="text"  class="form-control " id="filter-list" placeholder=" Usuários da seção" ng-model="searchText.nomeGuerra"/>
+            </div>
+           </div>
+         </div>
+       </div>
+         <table class="table table-hover  table-responsive" width="100%">
+           <thead>
+              <tr>
+                 <th ng-click="sort('nomeGuerra')">Nome <span class="glyphicon sort-icon" ng-show="sortKey=='nomeGuerra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('postGrad')">Projeto <span class="glyphicon sort-icon" ng-show="sortKey=='postGrad'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('turno')">Turno <span class="glyphicon sort-icon" ng-show="sortKey=='turno'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('secao.nome')">Seção <span class="glyphicon sort-icon" ng-show="sortKey=='secao.nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('perfil')">Perfil <span class="glyphicon sort-icon" ng-show="sortKey=='perfil'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('funcoesTexto')">Funções <span class="glyphicon sort-icon" ng-show="sortKey=='funcoesTexto'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+              </tr>
+           </thead>
+            <tbody>
+               <tr ng-repeat="usuario in filtered = (usuarios | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index" ng-click="modificaUsuario(usuario)">
+                  <td>{{ usuario.nomeGuerra }}</td>
+                  <td>{{ usuario.postGrad }}</td>
+                  <td>{{ usuario.turno }}</td>
+                  <td>{{ usuario.secao.nome }}</td>
+                  <td>{{ usuario.perfil }}</td>
+                  <td>{{ usuario.funcoesTexto }}</td>
+               </tr>
+            </tbody>
+         </table>
+        <div class="clearfix" ng-show="usuarios.length > numPerPage">
+          <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
+          ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
+          previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
+        </div>
+      </div>
+      <strong>Existem {{usuarios.length}} usuarios na seção.</strong>
+   </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="panel panel-default" style = "margin-top: 1em">
+   <div class="panel-heading panel-heading-custom">Funções</div>
+   <div class="panel-body">
+     <div ng-show="funcoes.length > 0">
+         <table class="table table-hover table-responsive" width="100%">
+           <thead>
+              <tr>
+                 <th>Nome</th>
+                 <th>Seção</th>
+              </tr>
+           </thead>
+            <tbody>
+               <tr ng-repeat="funcao in funcoes track by $index"   ng-click="criaFuncao(funcao)">
+                 <td>{{ funcao.nome }}</td>
+                 <td>{{ funcao.secao.nome }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+       <strong>Existem {{funcoes.length}} funções</strong>
+   </div>
+</div>
+
+<button type="button" class="btn btn-default" ng-click="criaFuncao()" data-toggle="tooltip" title="Adicionar nova Função">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Adicionar nova Função
+</button>

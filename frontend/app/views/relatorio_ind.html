@@ -1,0 +1,179 @@
+<uib-tabset active="activeJustified" justified="true">
+  <uib-tab index="0" heading="Detalhado">
+    <div class="panel panel-default" style = "margin-top: 1em">
+       <div class="panel-heading panel-heading-custom">Atividades - {{usuario.postGrad}} {{usuario.nome}}</div>
+       <div class="panel-body">
+         <div ng-show="atividades.length > 0">
+           <div class="row">
+             <div class="col-md-3">
+               <label for="">Mostrar
+                 <select class="form-control pagination" ng-model="numPerPage" ng-options="numPage for numPage in numsForPage" ng-change="changeNum(numPerPage);"></select>
+                 itens por página
+               </label>
+             </div>
+             <div class="col-md-9 text-right">
+               <div class="form-inline form-group">
+                 <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+                    <input type="text"  class="form-control " id="filter-list" placeholder=" MI" ng-model="searchText.mi"/>
+                </div>
+                 <label for="filter-list">Data inicio</label>
+                 <div class="input-group">
+                 <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="date1" is-open="popup1.opened" datepicker-options="dateOptions"
+                    close-text="Fechar" current-text="Hoje" clear-text = "Remover" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </div>
+                 <label for="filter-list">Data fim</label>
+                 <div class="input-group">
+                 <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="date2" is-open="popup2.opened" datepicker-options="dateOptions"
+                   close-text="Fechar" current-text="Hoje" clear-text = "Remover" />
+                 <span class="input-group-btn">
+                   <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                 </span>
+               </div>
+             </div>
+               </div>
+             </div>
+           </div>
+             <table class="table table-hover  table-responsive" width="100%">
+               <thead>
+                  <tr>
+                     <th ng-click="sort('tarefa.subprojeto.nome')">Subprojeto <span class="glyphicon sort-icon" ng-show="sortKey=='tarefa.subprojeto.nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('subfase.nome')">Subfase <span class="glyphicon sort-icon" ng-show="sortKey=='subfase.nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('mi')">MI <span class="glyphicon sort-icon" ng-show="sortKey=='mi'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('dataInicio')">Data de Início <span class="glyphicon sort-icon" ng-show="sortKey=='dataInicio'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('dataFim')">Data Fim <span class="glyphicon sort-icon" ng-show="sortKey=='dataFim'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('status')">Status <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                  </tr>
+               </thead>
+                <tbody>
+                   <tr ng-repeat="ativ in filtered = (atividades | filter: searchText | datefilter:date1:date2) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index" ng-click="criaUsuario(usuario)">
+                     <td>{{ ativ.tarefa.subprojeto.nome }}</td>
+                     <td>{{ ativ.subfase.nome }}</td>
+                      <td>{{ ativ.tarefa.mi }}</td>
+                      <td>{{ ativ.dataInicio | date:'HH:m dd-MM-yyyy' }}</td>
+                      <td>{{ ativ.dataFim | date:'HH:m dd-MM-yyyy' }}</td>
+                      <td>{{ ativ.status }}</td>
+                   </tr>
+                </tbody>
+             </table>
+            <div class="clearfix" ng-show="atividades.length > numPerPage">
+              <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
+              ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
+              previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
+            </div>
+          </div>
+       </div>
+    </div>
+  </uib-tab>
+  <uib-tab index="1" heading="Sumarizado">
+    <div class="panel panel-default" style = "margin-top: 1em">
+       <div class="panel-heading panel-heading-custom">Atividades Concluídas - {{usuario.postGrad}} {{usuario.nome}}</div>
+       <div class="panel-body">
+         <div ng-show="atividadesSum.length > 0">
+           <div class="row">
+             <div class="col-md-6">
+               <label for="">Mostrar
+                 <select class="form-control pagination" ng-model="numPerPage" ng-options="numPage for numPage in numsForPage" ng-change="changeNum(numPerPage);"></select>
+                 itens por página
+               </label>
+             </div>
+             <div class="col-md-6 text-right">
+               <div class="form-inline form-group">
+                 <label for="filter-list"></label>
+                 <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+                    <input type="text"  class="form-control " id="filter-list" placeholder=" MI" ng-model="searchText.mi"/>
+                </div>
+               </div>
+             </div>
+           </div>
+             <table class="table table-hover  table-responsive" width="100%">
+               <thead>
+                  <tr>
+                     <th ng-click="sort('tarefa.subprojeto.nome')">Subprojeto <span class="glyphicon sort-icon" ng-show="sortKey=='tarefa.subprojeto.nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('subfase.nome')">Subfase <span class="glyphicon sort-icon" ng-show="sortKey=='subfase.nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('mi')">MI <span class="glyphicon sort-icon" ng-show="sortKey=='mi'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('tempoTotal')">Tempo subfase (horas:minutos) <span class="glyphicon sort-icon" ng-show="sortKey=='tempoTotal'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                  </tr>
+               </thead>
+                <tbody>
+                   <tr ng-repeat="ativ in filtered = (atividadesSum | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index" ng-click="criaUsuario(usuario)">
+                     <td>{{ ativ.tarefa.subprojeto.nome }}</td>
+                     <td>{{ ativ.subfase.nome }}</td>
+                      <td>{{ ativ.tarefa.mi }}</td>
+                      <td>{{ ativ.tempoTotal }}</td>
+                   </tr>
+                </tbody>
+             </table>
+            <div class="clearfix" ng-show="atividadesSum.length > numPerPage">
+              <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
+              ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
+              previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
+            </div>
+          </div>
+       </div>
+    </div>
+  </uib-tab>
+  <uib-tab index="2" heading="Outras atividades">
+
+    <div class="panel panel-default" style = "margin-top: 1em">
+       <div class="panel-heading panel-heading-custom">Atividades Especiais - {{usuario.postGrad}} {{usuario.nome}}</div>
+       <div class="panel-body">
+         <div ng-show="atividadesEspeciais.length > 0">
+           <div class="row">
+             <div class="col-md-6">
+               <label for="">Mostrar
+                 <select class="form-control pagination" ng-model="numPerPage" ng-options="numPage for numPage in numsForPage" ng-change="changeNum(numPerPage);"></select>
+                 itens por página
+               </label>
+             </div>
+             <div class="col-md-6 text-right">
+               <div class="form-inline form-group">
+                 <label for="filter-list"></label>
+                 <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+                    <input type="text"  class="form-control " id="filter-list" placeholder=" Nome atividade" ng-model="searchText.nome"/>
+                </div>
+               </div>
+             </div>
+           </div>
+             <table class="table table-hover  table-responsive" width="100%">
+               <thead>
+                  <tr>
+                     <th ng-click="sort('nome')">Nome <span class="glyphicon sort-icon" ng-show="sortKey=='nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('dataInicio')">Data de Início <span class="glyphicon sort-icon" ng-show="sortKey=='dataInicio'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('dataFim')">Data Fim <span class="glyphicon sort-icon" ng-show="sortKey=='dataFim'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('tempoTotal')">Tempo subfase (horas:minutos) <span class="glyphicon sort-icon" ng-show="sortKey=='tempoTotal'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                     <th ng-click="sort('status')">Status <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                  </tr>
+               </thead>
+                <tbody>
+                   <tr ng-repeat="ativ in filtered = (atividadesEspeciais | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index" ng-click="criaUsuario(usuario)">
+                     <td>{{ ativ.tipoAtividadeEspecial.nome }}</td>
+                      <td>{{ ativ.dataInicio | date:'HH:m dd-MM-yyyy' }}</td>
+                      <td>{{ ativ.dataFim | date:'HH:m dd-MM-yyyy' }}</td>
+                      <td>{{ ativ.tempoTotal }}</td>
+                      <td>{{ ativ.status }}</td>
+                   </tr>
+                </tbody>
+             </table>
+            <div class="clearfix" ng-show="atividadesEspeciais.length > numPerPage">
+              <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
+              ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
+              previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
+            </div>
+          </div>
+       </div>
+    </div>
+
+  </uib-tab>
+</uib-tabset>

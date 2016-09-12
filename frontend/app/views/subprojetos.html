@@ -1,0 +1,26 @@
+<div class="panel panel-default" style = "margin-top: 3em">
+   <div class="panel-heading panel-heading-custom">Subprojetos</div>
+   <div class="panel-body">
+     <div ng-show="subprojetos.length > 0">
+         <table class="table table-hover  table-responsive" width="100%">
+           <thead>
+              <tr>
+                 <th>Nome</th>
+                 <th>Projeto</th>
+              </tr>
+           </thead>
+            <tbody>
+               <tr ng-repeat="subprojeto in subprojetos track by $index" ng-click="modificaSubprojeto(subprojeto)">
+                  <td>{{ subprojeto.nome }}</td>
+                  <td>{{ subprojeto.projeto.nome }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <strong>Existem {{subprojetos.length}} subprojetos</strong>
+   </div>
+</div>
+
+<button type="button" class="btn btn-default" ng-click="criaSubprojeto()">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo Subprojeto
+</button>

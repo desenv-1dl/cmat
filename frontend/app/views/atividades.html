@@ -1,0 +1,100 @@
+<div ng-if="atividadeEmExecucao">
+  <div class="jumbotron" style="padding-left: 48px">
+    <div ng-if="atividadeEmExecucao.tarefa">
+      <h2><strong>{{atividadeEmExecucao.tarefa.mi}}</strong></h2>
+      <h4>{{atividadeEmExecucao.subfase.nome}} - {{atividadeEmExecucao.tarefa.subprojeto.nome}}</h4>
+      <br/>
+      <div class="form-group">
+        <label for="nomefolha">Nome folha:</label>
+        <input type="text" class="form-control" id="nomefolha" ng-model="atividadeEmExecucao.tarefa.nomeFolha">
+      </div>
+      <div class="form-group">
+        <label>Palavras chave:</label>
+        <button type="button" class="btn btn-default btn-xs" ng-click="addPalavraChave()">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-xs" ng-click="remPalavraChave()">
+          <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+        </button>
+        <p ng-repeat="item in palavrasChave track by $index"><input type="text" class="form-control" ng-model="palavrasChave[$index]"></p>
+      </div>
+      <div class="form-group">
+        <label for="observ">Observação:</label>
+        <textarea class="form-control" rows="3" id="observ" ng-model="atividadeEmExecucao.observacao"></textarea>
+      </div>
+    </div>
+    <div ng-if="!(atividadeEmExecucao.tarefa)">
+      <h2><strong>{{atividadeEmExecucao.nome}}</strong></h2>
+      <br/>
+      <div class="form-group">
+        <label for="observ2">Observação:</label>
+        <textarea class="form-control" rows="3" id="observ2" ng-model="atividadeEmExecucao.observacao"></textarea>
+      </div>
+    </div>
+    <div class="pull-right">
+    <button type="button" class="btn btn-default" ng-click="pausa(atividadeEmExecucao)">
+        Pausar atividade
+    </button>
+    <button type="button" class="btn btn-default" ng-click="finaliza(atividadeEmExecucao)">
+        Finalizar atividade
+    </button>
+    </div>
+  </div>
+</div>
+<div ng-if="!(atividadeEmExecucao)">
+
+  <div ng-if="atividadesIniciadas.length>0">
+    <div class="jumbotron" style="padding-left: 48px" ng-repeat="item in atividadesIniciadas">
+      <div ng-if="item.tarefa">
+        <h2><strong>{{item.tarefa.mi}}</strong></h2>
+        <h4>{{item.subfase.nome}} - {{item.tarefa.subprojeto.nome}}</h4>
+        <br/>
+        <h4><strong>Nome folha</strong>: {{item.tarefa.nomeFolha}}</h4>
+        <h4><strong>Palavras chave</strong>:</h5>
+        <h4 ng-repeat="pchave in item.tarefa.palavrasChave" style="margin-left: 10px">{{pchave}}</h4>
+        <h4><strong>Observação</strong>: {{item.observacao}}</h4>
+      </div>
+      <div ng-if="!(item.tarefa)">
+        <h2><strong>{{item.nome}}</strong></h2>
+        <br/>
+        <h4><strong>Observação</strong>: {{item.observacao}}</h4>
+      </div>
+      <a class="btn btn-primary btn-large pull-right" style="margin-right: 20px" ng-click="inicia(item)">Continuar atividade &raquo;</a>
+    </div>
+  </div>
+
+  <div ng-if="!(atividadesIniciadas.length>0) && atividadePrioritaria1">
+    <div class="jumbotron" style="padding-left: 48px">
+      <h2><strong>{{atividadePrioritaria1.tarefa.mi}}</strong></h2>
+      <h4>{{atividadePrioritaria1.subfase.nome}} - {{atividadePrioritaria1.tarefa.subprojeto.nome}}</h4>
+      <br/>
+      <h4><strong>Nome folha</strong>: {{atividadePrioritaria1.tarefa.nomeFolha}}</h4>
+      <h4><strong>Palavras chave</strong>:</h5>
+      <h4 ng-repeat="pchave in atividadePrioritaria1.tarefa.palavrasChave" style="margin-left: 10px">{{pchave}}</h4>
+      <h4><strong>Observação</strong>: {{atividadePrioritaria1.observacao}}</h4>
+      <a class="btn btn-primary btn-large pull-right" style="margin-right: 20px" ng-click="inicia(atividadePrioritaria1)">Iniciar atividade &raquo;</a>
+    </div>
+  </div>
+
+  <div class="jumbotron" style="padding-left: 48px" ng-if="mostraSegundaAtiv">
+    <h2><strong>{{proximaAtiv.tarefa.mi}}</strong></h2>
+    <h4>{{proximaAtiv.subfase.nome}} - {{proximaAtiv.tarefa.subprojeto.nome}}</h4>
+    <br/>
+    <h4><strong>Nome folha</strong>: {{proximaAtiv.tarefa.nomeFolha}}</h4>
+    <h4><strong>Palavras chave</strong>:</h5>
+    <h4 ng-repeat="pchave in atividadePrioritaria1.tarefa.palavrasChave" style="margin-left: 10px">{{pchave}}</h4>
+    <h4><strong>Observação</strong>: {{proximaAtiv.observacao}}</h4>
+    <p><a class="btn btn-primary btn-large pull-right" style="margin-right: 20px"  ng-click="inicia(proximaAtiv)">Iniciar atividade &raquo;</a></p>
+  </div>
+
+<div class="pull-right">
+<button type="button" class="btn btn-default" ng-click="mostraSegundaAtiv = !mostraSegundaAtiv"
+    ng-init="mostraSegundaAtiv = false" ng-show="proximaAtiv">Habilita segunda atividade
+</button>
+
+<button type="button" class="btn btn-default" ng-click="criaAtividadeEspecial()">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adiciona outras atividades
+</button>
+</div>
+
+</div>
