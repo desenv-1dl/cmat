@@ -5,6 +5,7 @@ CREATE TABLE equipamento(
 	fabricante VARCHAR(255),
 	tipo VARCHAR(255),
 	carga VARCHAR(255), --NUMERO DE CARGA NO SISCOFIS
+	disponivel BOOLEAN,
 	foto bytea
 );
 GRANT ALL ON TABLE equipamento TO public;
@@ -14,7 +15,8 @@ CREATE TABLE cautela(
 	numero VARCHAR(255) NOT NULL, --AUTOMATIZAR O NUMERO CONCATENADO COM O ANO
 	operador VARCHAR(255) NOT NULL,
 	data_inicio DATE NOT NULL,	
-	data_fim DATE
+	data_fim DATE,
+	emAberto BOOLEAN
 );
 GRANT ALL ON TABLE cautela TO public;
 --#############################################
@@ -33,6 +35,7 @@ CREATE TABLE manutencao(
 	data_inicio DATE NOT NULL,
 	data_fim DATE,
 	descricao TEXT,
+	empresa VARCHAR(255),
 	valor REAL
 );
 GRANT ALL ON TABLE manutencao TO public;
@@ -43,7 +46,8 @@ CREATE TABLE historico_utilizacao(
 	data_fim DATE,
 	missao VARCHAR(255),
 	operador VARCHAR(255),
-	equipamento_id INTEGER NOT NULL REFERENCES equipamento (id)
+	equipamento_id INTEGER NOT NULL REFERENCES equipamento (id),
+	cautela_id INTEGER NOT NULL REFERENCES cautela (id)
 );
 GRANT ALL ON TABLE historico_utilizacao TO public;
 --############################################################
