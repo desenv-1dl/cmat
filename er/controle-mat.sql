@@ -1,5 +1,6 @@
+﻿BEGIN;
 CREATE TABLE equipamento(
-	ID SERIAL NOT NULL PRIMARY KEY;
+	id SERIAL NOT NULL PRIMARY KEY,
 	nome VARCHAR(255),
 	fabricante VARCHAR(255),
 	tipo VARCHAR(255),
@@ -20,8 +21,8 @@ GRANT ALL ON TABLE cautela TO public;
 
 CREATE TABLE cautela_equipamento(
 	id SERIAL NOT NULL PRIMARY KEY,
-	equipamento_id INTEGER NOT NULL REFERENCES equipamento(id),
-	cautela_id INTEGER NOT NULL REFERENCES cautela(id)
+	equipamento_id INTEGER NOT NULL REFERENCES equipamento (id),
+	cautela_id INTEGER NOT NULL REFERENCES cautela (id)
 	
 );
 GRANT ALL ON TABLE cautela_equipamento TO public;
@@ -32,7 +33,7 @@ CREATE TABLE manutencao(
 	data_inicio DATE NOT NULL,
 	data_fim DATE,
 	descricao TEXT,
-	valor REAL,
+	valor REAL
 );
 GRANT ALL ON TABLE manutencao TO public;
 --#################################################
@@ -40,11 +41,12 @@ CREATE TABLE historico_utilizacao(
 	id SERIAL NOT NULL PRIMARY KEY,
 	data_inicio DATE NOT NULL,	
 	data_fim DATE,
-	missão VARCHAR(255),
+	missao VARCHAR(255),
 	operador VARCHAR(255),
-	equipamento INTEGER NOT NULL REFERENCES equipamento(id),
+	equipamento_id INTEGER NOT NULL REFERENCES equipamento (id)
 );
 GRANT ALL ON TABLE historico_utilizacao TO public;
 --############################################################
 --CREATE TABLE documento(
 --);
+COMMIT;
