@@ -15,8 +15,7 @@ CREATE TABLE cautela(
 	numero VARCHAR(255) NOT NULL, --AUTOMATIZAR O NUMERO CONCATENADO COM O ANO
 	operador VARCHAR(255) NOT NULL,
 	data_inicio DATE NOT NULL,
-	data_fim DATE,
-	emAberto BOOLEAN
+	data_fim DATE
 );
 GRANT ALL ON TABLE cautela TO public;
 --#############################################
