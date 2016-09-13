@@ -1,33 +1,32 @@
-(function() {
-    'use strict';
+(function () {
+  'use strict';
 
-    var loginCtrl = function($scope, loginFactory, $location) {
+  var loginCtrl = function($scope, loginFactory, $location) {
 
-      $scope.errorMsg = null;
+    $scope.errorMsg = null;
 
-      $scope.info = {};
+    $scope.info = {};
 
-      $scope.login = function () {
-  			//Returns an URL or an Error
+    $scope.login = function () {
+      //Returns an URL or an Error
 
-  			loginFactory.login($scope.info)
-  				.then(function sucess(response) {
-  					//redirects application
-  					$location.path('main')
+      loginFactory.login($scope.info)
+      .then(function sucess(response) {
+        //redirects application
+        $location.path('main');
 
-  				}, function error(response) {
+      }, function error(response) {
 
-  					$scope.errorMsg = response;
-            console.log($scope.errorMsg)
+        $scope.errorMsg = response;
 
-  				});
-  		}
-
+      });
     };
 
-    loginCtrl.$inject = ['$scope', 'loginFactory', '$location'];
+  };
 
-    angular.module('controleApp')
-        .controller('loginCtrl', loginCtrl);
+  loginCtrl.$inject = ['$scope', 'loginFactory', '$location'];
+
+  angular.module('cmatApp')
+    .controller('loginCtrl', loginCtrl);
 
 })();
