@@ -17,30 +17,28 @@
     exposedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Link, Location',
   }));
 
-  // router.use(function(req, res, next) {
-  //   res.header("Access-Control-Allow-Origin", "*");
-  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  //   next();
-  // });
-
   router.get('/equipamentos', function (req, res, next) {
     operations.getEquipamentos(req, res, next);
+  });
+
+  router.post('/equipamentos', jsonParser, function (req, res, next) {
+    operations.postEquipamentos(req, res, req.body, next);
   });
 
   router.get('/cautelas', function (req, res, next) {
     operations.getCautelas(req, res, next);
   });
 
-  router.get('/cautelas/:id', function (req, res, next) {
-    operations.getCautelasByEquipId(req, res, req.params.id, next);
+  router.post('/cautelas', jsonParser, function (req, res, next) {
+    operations.postCautelas(req, res, req.body, next);
   });
 
   router.get('/manutencoes', function (req, res, next) {
     operations.getManutencoes(req, res, next);
   });
 
-  router.get('/manutencoes/:id', function (req, res, next) {
-    operations.getManutencoesByEquipId(req, res, req.params.id, next);
+  router.post('/manutencoes', jsonParser, function (req, res, next) {
+    operations.postManutencoes(req, res, req.body, next);
   });
 
   module.exports = router;
