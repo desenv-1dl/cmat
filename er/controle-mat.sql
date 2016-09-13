@@ -14,7 +14,7 @@ CREATE TABLE cautela(
 	id SERIAL NOT NULL PRIMARY KEY,
 	numero VARCHAR(255) NOT NULL, --AUTOMATIZAR O NUMERO CONCATENADO COM O ANO
 	operador VARCHAR(255) NOT NULL,
-	data_inicio DATE NOT NULL,	
+	data_inicio DATE NOT NULL,
 	data_fim DATE,
 	emAberto BOOLEAN
 );
@@ -25,7 +25,7 @@ CREATE TABLE cautela_equipamento(
 	id SERIAL NOT NULL PRIMARY KEY,
 	equipamento_id INTEGER NOT NULL REFERENCES equipamento (id),
 	cautela_id INTEGER NOT NULL REFERENCES cautela (id)
-	
+
 );
 GRANT ALL ON TABLE cautela_equipamento TO public;
 --################################################
@@ -36,13 +36,14 @@ CREATE TABLE manutencao(
 	data_fim DATE,
 	descricao TEXT,
 	empresa VARCHAR(255),
-	valor REAL
+	valor REAL,
+	equipamento_id INTEGER NOT NULL REFERENCES equipamento (id)
 );
 GRANT ALL ON TABLE manutencao TO public;
 --#################################################
 CREATE TABLE historico_utilizacao(
 	id SERIAL NOT NULL PRIMARY KEY,
-	data_inicio DATE NOT NULL,	
+	data_inicio DATE NOT NULL,
 	data_fim DATE,
 	missao VARCHAR(255),
 	operador VARCHAR(255),
