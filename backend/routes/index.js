@@ -33,12 +33,20 @@
     operations.postCautelas(req, res, req.body, next);
   });
 
+  router.put('/cautelas/:id', jsonParser, function (req, res, next) {
+    operations.putCautelas(req, res, parseInt(req.params.id), req.body, next);
+  });
+
   router.get('/manutencoes', function (req, res, next) {
     operations.getManutencoes(req, res, next);
   });
 
   router.post('/manutencoes', jsonParser, function (req, res, next) {
     operations.postManutencoes(req, res, req.body, next);
+  });
+
+  router.put('/manutencoes/:id', jsonParser, function (req, res, next) {
+    operations.putManutencoes(req, res, parseInt(req.params.id), req.body, next);
   });
 
   module.exports = router;
