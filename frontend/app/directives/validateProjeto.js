@@ -3,7 +3,7 @@
 
   //custom directive to validate the Literal types
   //It is used at app/views/addLiteral, with the attribute directive 'validate-type'
-  angular.module('controleApp').directive('validateProjeto', [
+  angular.module('cmatApp').directive('validateProjeto', [
     function () {
       var link = function ($scope, $element, $attrs, ctrl) {
 

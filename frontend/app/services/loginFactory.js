@@ -2,7 +2,7 @@
   'use strict';
   var loginFactory = function ($http, $q) {
 
-      var loginUrl = 'http://localhost:3001/login';
+      //var loginUrl = 'http://localhost:3001/login';
 
       var factory = {};
 
@@ -12,27 +12,11 @@
       factory.login = function (info) {
         var q = $q.defer();
 
-        $http({
-          method: 'POST',
-          url: loginUrl,
-          data: info,
-        }).then(function successCallback(response) {
-          if ('erro' in response.data) {
-            console.log(response.data.erro);
-            q.reject(response.data.erro);
-          } else {
-            factory.usuario = response.data;
-
-            factory.secao = factory.usuario.secao;
-
-            q.resolve(response.data);
-          }
-
-        },
-
-        function errorCallback(response) {
-          q.reject('Erro de conexão');
-        });
+        factory.usuario = {};
+        factory.usuario.nomeGuerra = info.login;
+        factory.usuario.postGrad = '1º Ten';
+        factory.usuario.perfil = 'Administrador';
+        q.resolve(factory.usuario);
 
         return q.promise;
       };

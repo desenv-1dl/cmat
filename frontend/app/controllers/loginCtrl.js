@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var loginCtrl = function($scope, loginFactory, $location) {
+  var loginCtrl = function ($scope, loginFactory, $location) {
 
     $scope.errorMsg = null;
 

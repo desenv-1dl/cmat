@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="pull-left"><img src="/icons/simbolo_1dl_small.svg" style="max-width:30px; margin-left:30px"></a>
-      <a class="navbar-brand nonSelectableText nome_principal">Controle de Produção 1ªDL</a>
+      <a class="navbar-brand nonSelectableText nome_principal">Controle de Materiais Técnicos 1ªDL</a>
     </div>
 
     <ul class="nav navbar-nav navbar-right">
@@ -52,73 +52,29 @@
   <div id="aside">
     <div class="side-menu">
       <ul>
-        <li ng-click="abaAtiva = 'atividades'" ng-show="acessa('atividades')">
+        <li ng-click="abaAtiva = 'equipamentos'">
           <a>
-            <i class="glyphicon glyphicon-tasks glyphicon-menu"></i> Atividades
+            <i class="glyphicon glyphicon-briefcase glyphicon-menu"></i> Equipamentos
           </a>
         </li>
-        <li ng-click="abaAtiva = 'relatorio_ind'"  ng-show="acessa('relatorio_ind')">
+        <li ng-click="abaAtiva = 'cautelas'">
           <a>
-            <i class="glyphicon glyphicon-stats glyphicon-menu"></i> Relatório Individual
+            <i class="glyphicon glyphicon-open-file glyphicon-menu"></i> Cautelas
           </a>
         </li>
-        <li ng-click="abaAtiva = 'g_fluxo'"  ng-show="acessa('g_fluxo')">
+        <li ng-click="abaAtiva = 'manutencoes'">
           <a>
-            <i class="glyphicon glyphicon-random glyphicon-menu"></i> Gerenciamento de Fluxo
+            <i class="glyphicon glyphicon-wrench glyphicon-menu"></i> Manutenções
           </a>
         </li>
-        <li ng-click="abaAtiva = 'g_usuarios'"  ng-show="acessa('g_usuarios')">
-          <a>
-            <i class="glyphicon glyphicon-user glyphicon-menu"></i> Gerenciamento de Usuarios
-          </a>
-        </li>
-        <li ng-click="abaAtiva = 'relatorio_geral'" ng-show="acessa('relatorio_geral')">
-          <a>
-            <i class="glyphicon glyphicon-stats glyphicon-menu"></i> Relatório Geral
-          </a>
-        </li>
-        <li ng-click="abaAtiva = 'usuarios'" ng-show="acessa('usuarios')">
-          <a>
-            <i class="glyphicon glyphicon-user glyphicon-menu"></i> Usuários
-          </a>
-        </li>
-        <li data-toggle="collapse" data-target="#projetomenu" class="collapsed" ng-show="acessa('projetos')" toggle-class="active">
-          <a><i class="glyphicon glyphicon-list-alt glyphicon-menu"></i> Projetos <span class="glyphicon glyphicon-chevron-down" style="margin-left:8px;"></span></a>
-        </li>
-        <ul class="sub-menu collapse" id="projetomenu">
-            <li ng-click="abaAtiva = 'projetos'"><a href="">Projetos</a></li>
-            <li ng-click="abaAtiva = 'subprojetos'"><a href="">Subprojetos</a></li>
-        </ul>
-
-        <li data-toggle="collapse" data-target="#sdtmenu" class="collapsed" ng-show="acessa('sdt')" toggle-class="active">
-          <a><i class="glyphicon glyphicon-book glyphicon-menu"></i> SDT <span class="glyphicon glyphicon-chevron-down" style="margin-left:8px;"></span></a>
-        </li>
-        <ul class="sub-menu collapse" id="sdtmenu">
-            <li ng-click="abaAtiva = 'fases'"><a href="">Fases</a></li>
-            <li ng-click="abaAtiva = 'subfases'"><a href="">Subfases</a></li>
-            <li ng-click="abaAtiva = 'secoes'"><a href="">Seções</a></li>
-            <li ng-click="abaAtiva = 'funcoes'"><a href="">Funções</a></li>
-        </ul>
-      </li>
       </ul>
     </div>
   </div>
   <div class="main-area">
     <div class="content" ng-switch="abaAtiva" autoscroll="false" >
-      <div ng-switch-when="atividades" ng-controller="atividadeCtrl"><div ng-include src = "'app/views/atividades.html'"></div></div>
-       <div ng-switch-when="relatorio_ind" ng-controller="relatorioIndCtrl"><div ng-include src = "'app/views/relatorio_ind.html'"></div></div>
-       <div ng-switch-when="g_fluxo" ng-controller="fluxoCtrl"><div ng-include src = "'app/views/g_fluxo.html'"></div></div>
-       <div ng-switch-when="g_usuarios" ng-controller="gerenciaUserCtrl"><div ng-include src = "'app/views/g_usuarios.html'"></div></div>
-       <div ng-switch-when="relatorio_geral" ng-controller="relatorioGeralCtrl"><div ng-include src = "'app/views/relatorio_geral.html'"></div></div>
-       <div ng-switch-when="usuarios" ng-controller="usuarioCtrl"><div ng-include src = "'app/views/usuarios.html'"></div></div>
-       <div ng-switch-when="projetos" ng-controller="projetoCtrl"><div ng-include src = "'app/views/projetos.html'"></div></div>
-       <div ng-switch-when="subprojetos" ng-controller="projetoCtrl"><div ng-include src = "'app/views/subprojetos.html'"></div></div>
-       <div ng-switch-when="sdt" ng-controller="sdtCtrl"><div ng-include src = "'app/views/sdt.html'"></div></div>
-       <div ng-switch-when="fases" ng-controller="sdtCtrl"><div ng-include src = "'app/views/fases.html'"></div></div>
-       <div ng-switch-when="subfases" ng-controller="sdtCtrl"><div ng-include src = "'app/views/subfases.html'"></div></div>
-       <div ng-switch-when="secoes" ng-controller="sdtCtrl"><div ng-include src = "'app/views/secoes.html'"></div></div>
-       <div ng-switch-when="funcoes" ng-controller="sdtCtrl"><div ng-include src = "'app/views/funcoes.html'"></div></div>
-
+      <div ng-switch-when="equipamentos" ng-controller="equipamentoCtrl"><div ng-include src = "'app/views/equipamentos.html'"></div></div>
+       <div ng-switch-when="cautelas" ng-controller="cautelaCtrl"><div ng-include src = "'app/views/cautelas.html'"></div></div>
+       <div ng-switch-when="manutencoes" ng-controller="manutencaoCtrl"><div ng-include src = "'app/views/manutencoes.html'"></div></div>
     </div>
   </div>
 </div>
