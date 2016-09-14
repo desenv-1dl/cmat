@@ -3,22 +3,32 @@
 
   var equipamentoCtrl = function ($scope, $uibModal, dataFactory) {
 
-    var dados = ['projetos', 'subprojetos', 'subfases'];
-
     $scope.reload = function () {
-      dados.forEach(function (d) {
-        dataFactory.loadUrl(d).then(function success(response) {
-          $scope[d] = dataFactory[d];
-        }, function error(response) {
+      dataFactory.getEquipamentos().then(function success(response) {
+        $scope.equipamentos = dataFactory.equipamentos;
 
-        });
+        var situacoes = [
+          {id:1, nome: "Disponível"},
+          {id:2, nome: "Cautelado"},
+          {id:3, nome: "Em manutenção"},
+          {id:4, nome: "Indisponível"},
+        ];
+        $scope.equipamentos.forEach(function(e){
+          situacoes.forEach(function(d){
+            if( d.id === e.situacao){
+              e.situacaoText = d.nome;
+            }
+          })
+        })
+
+      }, function error(response) {
+        //FIXME
       });
     };
 
     $scope.reload();
 
     //paginação
-
     $scope.changeNum = function (itemNum) {
       $scope.numPerPage = itemNum;
     };
@@ -41,19 +51,19 @@
     };
 
     //modal
-    $scope.criaProjeto = function () {
+    $scope.criaEquip = function () {
 
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'app/views/modal/criaProjeto.html',
-        controller: 'criaProjetoCtrl',
+        templateUrl: 'app/views/modal/criaequip.html',
+        controller: 'criaEquipCtrl',
         size: 'lg',
       });
 
       modalInstance.result
       .then(function (result) {
         //result.projeto
-        dataFactory.saveUrl(result.projeto, 'projetos').then(function success(response) {
+        dataFactory.postEquipamentos(result.equipamento).then(function success(response) {
           $scope.reload();
         },
 
@@ -65,64 +75,23 @@
       });
     };
 
-    $scope.modificaSubprojeto = function (subprojeto) {
+    $scope.verificaEquipamento = function (equipamento) {
 
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'app/views/modal/modificaSubprojeto.html',
-        controller: 'modificaSubprojetoCtrl',
+        templateUrl: 'app/views/modal/verificaequip.html',
+        controller: 'verificaEquipCtrl',
         size: 'lg',
         resolve: {
-          subprojeto: function () {
-            return subprojeto;
+          equipamento: function () {
+            return equipamento;
           },
         },
       });
 
       modalInstance.result
       .then(function (result) {
-        //result.projeto
-        console.log(result.subprojeto);
-        dataFactory.updateUrl(result.subprojeto, 'subprojetos').then(function success(response) {
-          $scope.reload();
-        },
 
-        function error(response) {
-          console.log(response);
-        });
-      }, function (exit) {
-
-      });
-    };
-
-    $scope.criaSubprojeto = function () {
-
-      var modalInstance = $uibModal.open({
-        animation: true,
-        templateUrl: 'app/views/modal/criaSubprojeto.html',
-        controller: 'criaSubprojetoCtrl',
-        size: 'lg',
-        resolve: {
-          projetos: function () {
-            return $scope.projetos;
-          },
-
-          subfases: function () {
-            return $scope.subfases;
-          },
-        },
-      });
-
-      modalInstance.result
-      .then(function (result) {
-        //result.projeto
-        dataFactory.saveUrl(result.subprojeto, 'subprojetos').then(function success(response) {
-          $scope.reload();
-        },
-
-        function error(response) {
-          console.log(response);
-        });
       }, function (exit) {
 
       });
@@ -135,70 +104,25 @@
   angular.module('cmatApp')
   .controller('equipamentoCtrl', equipamentoCtrl);
 
-  var criaEquipCtrl = function ($scope, $uibModalInstance, dataFactory, projetos, subfases) {
+  var criaEquipCtrl = function ($scope, $uibModalInstance) {
 
-    $scope.page = 1;
+    $scope.equipamento = {};
 
-    $scope.subprojeto = {};
-    $scope.projetos = projetos;
-    $scope.subfases = subfases;
-
-    $scope.subprojeto.tarefas = [];
-    $scope.subprojeto.subfases = [];
-
-    $scope.listaSubfases = [];
-    $scope.addSubfase = function () {
-      if ($scope.subfaseAdd !== undefined) {
-        $scope.listaSubfases.push($scope.subfaseAdd);
-      }
-    };
-
-    $scope.miAdd = '';
-    $scope.listaBuscaMi = [];
-    $scope.pesquisaMi = function () {
-      dataFactory.pesquisaMi($scope.miAdd).then(function success(response) {
-        $scope.listaBuscaMi = dataFactory.listaMi;
-      }, function error(response) {
-      });
-    };
-
-    $scope.addMi = function (mi) {
-      if (!$scope.subprojeto.tarefas.some(function (e) {
-        return e._id === mi._id;
-      }))
-
-      {
-        var tarefa = {};
-        tarefa._id = mi._id;
-        tarefa.mi = mi.properties.mi;
-        tarefa.inom = mi.properties.inom;
-        tarefa.asc = mi.properties.asc;
-        tarefa.escala = mi.properties.escala;
-        tarefa.geometria = mi.geometry;
-        tarefa.concluido = false;
-        tarefa.subfaseAtual = $scope.subprojeto.subfases[0];
-
-        $scope.subprojeto.tarefas.push(tarefa);
-      }
-    };
-
-    $scope.proximo = function () {
-      $scope.page += 1;
-    };
-
-    $scope.anterior = function () {
-      $scope.page -= 1;
-    };
+    $scope.situacoes = [
+      {id:1, nome: "Disponível"},
+      {id:2, nome: "Cautelado"},
+      {id:3, nome: "Em manutenção"},
+      {id:4, nome: "Indisponível"},
+    ];
 
     $scope.finaliza = function () {
-      $scope.listaSubfases.forEach(function (d, i) {
-        $scope.subprojeto.subfases.push({
-          subfase: d, ordem: i,
-        });
-      });
-
+      $scope.situacoes.forEach(function(d){
+        if (d.nome === $scope.equipamento.situacaoText.nome) {
+          $scope.equipamento.situacao = d.id;
+        }
+      })
       $uibModalInstance.close({
-        subprojeto: $scope.subprojeto,
+        equipamento: $scope.equipamento,
       });
     };
 
@@ -207,7 +131,7 @@
     };
   };
 
-  criaEquipCtrl.$inject = ['$scope', '$uibModalInstance', 'dataFactory', 'projetos', 'subfases'];
+  criaEquipCtrl.$inject = ['$scope', '$uibModalInstance'];
 
   angular.module('cmatApp')
   .controller('criaEquipCtrl', criaEquipCtrl);

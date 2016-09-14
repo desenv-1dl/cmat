@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h3 class="modal-title">Nova Cautela</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaCautelaForm">
+      <div class="form-group">
+        <label class="control-label col-sm-2">Número</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="numero" placeholder="Número da cautela" ng-model="cautela.numero" required>
+        </div>
+      </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Responsável</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="operador" placeholder="Responsável pelo equipamento" ng-model="cautela.operador" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Equipamentos</label>
+      <div class="col-sm-10">
+        <ui-select multiple tagging="tagTransform" tagging-label="new tag" ng-model="cautela.eqp" theme="select2" ng-required="true" ng-disabled="disabled" style="width: 400px;">
+          <ui-select-match placeholder="Selecione uma ou mais equipamentos">{{$item.desc}}</ui-select-match>
+          <ui-select-choices repeat="equipamento in equipamentos | propsFilter: {nome: $select.search}">
+            <small>
+              {{equipamento.desc}}
+            </small>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Missão</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="missao" placeholder="Tipo" ng-model="cautela.missao" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Data de Início</label>
+      <div class="col-sm-10">
+        <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="cautela.data_inicio" is-open="popup1.opened"
+          ng-required="true" current-text="Hoje" clear-text="Remover" close-text="Fechar" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Data de Fim</label>
+      <div class="col-sm-10">
+        <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="cautela.data_fim" is-open="popup2.opened"
+          current-text="Hoje" clear-text="Remover" close-text="Fechar" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+        </p>
+      </div>
+    </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaCautelaForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

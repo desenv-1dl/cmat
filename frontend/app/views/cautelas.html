@@ -1,0 +1,56 @@
+<div class="panel panel-default" style = "margin-top: 1em">
+   <div class="panel-heading panel-heading-custom">Cautelas</div>
+   <div class="panel-body">
+     <div ng-show="cautelas.length > 0">
+       <div class="row">
+         <div class="col-md-6">
+           <label for="">Mostrar
+             <select class="form-control pagination" ng-model="numPerPage" ng-options="numPage for numPage in numsForPage" ng-change="changeNum(numPerPage);"></select>
+             itens por página
+           </label>
+         </div>
+         <div class="col-md-6 text-right">
+           <div class="form-inline form-group">
+             <label for="filter-list"></label>
+             <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+                <input type="text"  class="form-control " id="filter-list" placeholder=" Cautela" ng-model="searchText.nome"/>
+            </div>
+           </div>
+         </div>
+       </div>
+         <table class="table table-hover  table-responsive" width="100%">
+           <thead>
+              <tr>
+                <th ng-click="sort('numero')">Número <span class="glyphicon sort-icon" ng-show="sortKey=='numero'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                <th ng-click="sort('missao')">Missão <span class="glyphicon sort-icon" ng-show="sortKey=='missao'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('data_inicio')">Data Início <span class="glyphicon sort-icon" ng-show="sortKey=='data_inicio'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('data_fim')">Data Fim <span class="glyphicon sort-icon" ng-show="sortKey=='data_fim'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('operador')">Operador <span class="glyphicon sort-icon" ng-show="sortKey=='operador'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+              </tr>
+           </thead>
+            <tbody>
+               <tr ng-repeat="cautela in filtered = (cautelas | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index"  ng-click="verificaCautela(cautela)">
+                 <td>{{ cautela.numero }}</td>
+                 <td>{{ cautela.missao }}</td>
+                 <td>{{ cautela.data_inicio }}</td>
+                 <td>{{ cautela.data_fim }}</td>
+                 <td>{{ cautela.operador }}</td>
+               </tr>
+            </tbody>
+         </table>
+        <div class="clearfix" ng-show="cautelas.length > numPerPage">
+          <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
+          ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
+          previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
+        </div>
+      </div>
+       <strong>Foram feitas {{cautelas.length}} cautelas</strong>
+   </div>
+</div>
+
+<button type="button" class="btn btn-default" ng-click="criaCautela()" data-toggle="tooltip" title="Adicionar nova cautela">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Adicionar cautela
+</button>

@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h3 class="modal-title">Nova Manutenção</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaManutForm">
+    <div class="form-group">
+      <label class="control-label col-sm-2">Descrição</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="descricao" placeholder="Descrição da manutenção" ng-model="manutencao.descricao" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Equipamento</label>
+      <div class="col-sm-10">
+          <select ng-model="manutencao.equipamento" ng-options="equipamento.desc for equipamento in equipamentos track by equipamento.id" required></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Empresa</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="empresa" placeholder="Tipo" ng-model="manutencao.empresa" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Data de Início</label>
+      <div class="col-sm-10">
+        <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="manutencao.data_inicio" is-open="popup1.opened"
+          ng-required="true" current-text="Hoje" clear-text="Remover" close-text="Fechar" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Data de Fim</label>
+      <div class="col-sm-10">
+        <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup ng-model="manutencao.data_fim" is-open="popup2.opened"
+          current-text="Hoje" clear-text="Remover" close-text="Fechar" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+        </p>
+      </div>
+    </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaManutForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

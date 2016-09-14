@@ -39,12 +39,7 @@
         });
       });
 
-      res.status(200)
-      .json({
-        status: 'success',
-        data: data[0],
-        message: 'Recuperado todos os equipamentos',
-      });
+      res.status(200).json(data[0]);
     })
     .catch(function (err) {
       return next(err);
@@ -61,6 +56,8 @@
     }).then(function (data) {
       data[0].forEach(function (c) {
         c.equipamentos = [];
+        c.data_inicio = c.data_inicio.toISOString().split('T')[0];
+        c.data_fim = c.data_fim ? c.data_fim.toISOString().split('T')[0] : null;
         data[1].forEach(function (e) {
           if (e.cautela_id === c.id) {
             delete e.cautela_id;
@@ -70,12 +67,7 @@
         });
       });
 
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data[0],
-          message: 'Recuperado todas as cautelas',
-        });
+      res.status(200).json(data[0]);
     })
     .catch(function (err) {
       return next(err);
@@ -88,7 +80,10 @@
           ' ON m.equipamento_id = e.id')
       .then(function (data) {
         data.forEach(function (m) {
+          m.data_inicio = m.data_inicio.toISOString().split('T')[0];
+          m.data_fim = m.data_fim ? m.data_fim.toISOString().split('T')[0] : null;
           m.equipamento = {};
+          m.equipamento.id = m.equipamento_id;
           m.equipamento.nome = m.nome;
           m.equipamento.fabricante = m.fabricante;
           m.equipamento.tipo = m.tipo;
@@ -106,12 +101,7 @@
 
         });
 
-        res.status(200)
-          .json({
-            status: 'success',
-            data: data,
-            message: 'Recuperado todas as manutenções',
-          });
+        res.status(200).json(data);
       })
       .catch(function (err) {
         return next(err);
@@ -135,8 +125,8 @@
   }
 
   function postManutencoes(req, res, data, next) {
-    if (!data.dataFim) {
-      data.dataFim = null;
+    if (!data.data_fim) {
+      data.data_fim = null;
     }
 
     if (!data.valor) {
@@ -144,8 +134,8 @@
     }
 
     db.none('INSERT INTO manutencao(data_inicio, data_fim, descricao, empresa,' +
-        'valor, equipamento_id) values(${dataInicio}, ${dataFim}, ${descricao},' +
-        '${empresa}, ${valor}, ${equipamentoId})', data)
+        'valor, equipamento_id) values(${data_inicio}, ${data_fim}, ${descricao},' +
+        '${empresa}, ${valor}, ${equipamento_id})', data)
       .then(function () {
         res.status(200)
           .json({
@@ -159,13 +149,13 @@
   }
 
   function postCautelas(req, res, data, next) {
-    if (!data.dataFim) {
-      data.dataFim = null;
+    if (!data.data_fim) {
+      data.data_fim = null;
     }
 
     db.tx(function (t) {
         return t.one('INSERT INTO cautela(numero, operador, missao, data_inicio, data_fim)' +
-        'values(${numero}, ${operador}, ${missao}, ${dataInicio}, ${dataFim}) returning id',
+        'values(${numero}, ${operador}, ${missao}, ${data_inicio}, ${data_fim}) returning id',
         data).then(function (resp) {
           var queries = [];
           data.equipamentos.forEach(function (e) {
@@ -191,8 +181,8 @@
   }
 
   function putManutencoes(req, res, id, data, next) {
-    if (!data.dataFim) {
-      data.dataFim = null;
+    if (!data.data_fim) {
+      data.data_fim = null;
     }
 
     if (!data.valor) {
@@ -201,8 +191,8 @@
 
     db.none('UPDATE manutencao SET data_inicio=$1, data_fim=$2, descricao=$3, ' +
             'empresa=$4, valor=$5, equipamento_id=$6 where id=$7',
-            [data.dataInicio, data.dataFim, data.descricao, data.empresa,
-            data.valor, data.equipamentoId, id,
+            [data.data_inicio, data.data_fim, data.descricao, data.empresa,
+            data.valor, data.equipamento_id, id,
       ])
       .then(function () {
         res.status(200)
@@ -217,15 +207,15 @@
   }
 
   function putCautelas(req, res, id, data, next) {
-    if (!data.dataFim) {
-      data.dataFim = null;
+    if (!data.data_fim) {
+      data.data_fim = null;
     }
 
     db.tx(function (t) {
         return t.none('UPDATE cautela SET numero=$1, operador=$2, data_inicio=$3, ' +
         'data_fim=$4 where id=$5',
         [
-          data.numero, data.operador, data.dataInicio, data.dataFim, id,
+          data.numero, data.operador, data.data_inicio, data.data_fim, id,
         ]).then(function () {
           return t.none('DELETE from cautela_equipamento where cautela_id=$1', id)
             .then(function () {

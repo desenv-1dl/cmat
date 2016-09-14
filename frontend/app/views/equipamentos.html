@@ -1,7 +1,7 @@
 <div class="panel panel-default" style = "margin-top: 1em">
    <div class="panel-heading panel-heading-custom">Equipamentos</div>
    <div class="panel-body">
-     <div ng-show="subfases.length > 0">
+     <div ng-show="equipamentos.length > 0">
        <div class="row">
          <div class="col-md-6">
            <label for="">Mostrar
@@ -16,7 +16,7 @@
                 <span class="input-group-addon">
                     <i class="glyphicon glyphicon-search"></i>
                 </span>
-                <input type="text"  class="form-control " id="filter-list" placeholder=" Subfase" ng-model="searchText.nome"/>
+                <input type="text"  class="form-control " id="filter-list" placeholder=" Equipamento" ng-model="searchText.nome"/>
             </div>
            </div>
          </div>
@@ -25,28 +25,32 @@
            <thead>
               <tr>
                  <th ng-click="sort('nome')">Nome <span class="glyphicon sort-icon" ng-show="sortKey=='nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-                 <th ng-click="sort('fase')">Fase <span class="glyphicon sort-icon" ng-show="sortKey=='fase'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-                 <th ng-click="sort('funcoes')">Funções associadas <span class="glyphicon sort-icon" ng-show="sortKey=='funcoes'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('fabricante')">Fabricante <span class="glyphicon sort-icon" ng-show="sortKey=='fabricante'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('tipo')">Tipo <span class="glyphicon sort-icon" ng-show="sortKey=='tipo'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('carga')">Carga <span class="glyphicon sort-icon" ng-show="sortKey=='carga'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('situacao')">Situação <span class="glyphicon sort-icon" ng-show="sortKey=='situacao'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
               </tr>
            </thead>
             <tbody>
-               <tr ng-repeat="subfase in filtered = (subfases | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index"  ng-click="criaSubfase(subfase)">
-                 <td>{{ subfase.nome }}</td>
-                 <td>{{ subfase.fase.nome }}</td>
-                 <td>{{ subfase.funcoesTexto }}</td>
+               <tr ng-repeat="equipamento in filtered = (equipamentos | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index"  ng-click="verificaEquipamento(equipamento)">
+                 <td>{{ equipamento.nome }}</td>
+                 <td>{{ equipamento.fabricante }}</td>
+                 <td>{{ equipamento.tipo }}</td>
+                 <td>{{ equipamento.carga }}</td>
+                 <td>{{ equipamento.situacaoText }}</td>
                </tr>
             </tbody>
          </table>
-        <div class="clearfix" ng-show="subfases.length > numPerPage">
+        <div class="clearfix" ng-show="equipamentos.length > numPerPage">
           <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
           ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
           previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
         </div>
       </div>
-       <strong>Existem {{subfases.length}} subfases</strong>
+       <strong>Existem {{equipamentos.length}} equipamento(s)</strong>
    </div>
 </div>
 
-<button type="button" class="btn btn-default" ng-click="criaSubfase()" data-toggle="tooltip" title="Adicionar nova Subfase">
+<button type="button" class="btn btn-default" ng-click="criaEquip()" data-toggle="tooltip" title="Adicionar novo equipamento">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Adicionar equipamento
 </button>

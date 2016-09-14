@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h3 class="modal-title">Novo Equipamento</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" role="form" name="criaEquipForm">
+      <div class="form-group">
+          <label class="control-label col-sm-2">Nome</label>
+          <div class="col-sm-10" ng-class="{ 'has-error': criaEquipForm.nome.$touched && criaEquipForm.nome.$invalid }">
+              <input type="text" class="form-control" name="nome" placeholder="Nome do equipamento" ng-model="equipamento.nome" required>
+              <div ng-messages="criaEquipForm.nome.$error" ng-if="criaEquipForm.nome.$touched">
+                  <p style="color: red" ng-message="required">Preencha o nome do equipamento</p>
+                  <p style="color: red" ng-message="nome">Nome inválido</p>
+              </div>
+          </div>
+      </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Fabricante</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="fabricante" placeholder="Nome do fabricante" ng-model="equipamento.fabricante" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Tipo</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="tipo" placeholder="Tipo" ng-model="equipamento.tipo" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Carga</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="carga" placeholder="Nº da carga" ng-model="equipamento.carga" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Situação</label>
+      <div class="col-sm-10">
+          <select ng-model="subfase.situacaoText" ng-options="situacao.nome for situacao in situacoes track by situacao.id" required></select>
+      </div>
+    </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="criaEquipForm.$invalid" type="button" ng-click="finaliza()">Finaliza</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Cancela</button>
+    </div>
+</div>

@@ -42,8 +42,8 @@ html, body {
     left: 50%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-    width: 900px;
-    height: 900px;
+    width: 90%;
+    height: 90%;
   }
 
 .login_1dl{
@@ -221,23 +221,23 @@ html, body {
   box-shadow: 0 0 0;
   border-radius: 0;
   background: transparent;
-  color: #555555;
+  color: #000000;
   padding: 7px 0;
   font-weight: bold;
   font-size: 15px;
   height:auto;
 }
 .login-form-1 .form-control::-webkit-input-placeholder {
-  color: #999999;
+  color: #000000;
 }
 .login-form-1 .form-control:-moz-placeholder,
 .login-form-1 .form-control::-moz-placeholder,
 .login-form-1 .form-control:-ms-input-placeholder {
-  color: #999999;
+  color: #000000;
 }
 .login-form-1 .form-group {
   margin-bottom: 0;
-  border-bottom: 2px solid #efefef;
+  border-bottom: 2px solid #d7d7d7;
   padding-right: 20px;
   position: relative;
 }
@@ -259,21 +259,21 @@ html, body {
   right: -25px;
   top: 50%;
   background: #ffffff;
-  color: #999999;
+  color: #222222;
   padding: 11px 0;
   width: 50px;
   height: 50px;
   margin-top: -25px;
-  border: 5px solid #efefef;
+  border: 5px solid #d7d7d7;
   border-radius: 50%;
   transition: all ease-in-out 500ms;
 }
 .login-form-1 .login-button:hover {
-  color: #555555;
+  color: #222222;
   transform: rotate(450deg);
 }
 .login-form-1 .login-button.clicked {
-  color: #555555;
+  color: #222222;
 }
 .login-form-1 .login-button.clicked:hover {
   transform: none;

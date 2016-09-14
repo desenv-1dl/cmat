@@ -1,0 +1,54 @@
+<div class="panel panel-default" style = "margin-top: 1em">
+   <div class="panel-heading panel-heading-custom">Manutenções</div>
+   <div class="panel-body">
+     <div ng-show="manutencoes.length > 0">
+       <div class="row">
+         <div class="col-md-6">
+           <label for="">Mostrar
+             <select class="form-control pagination" ng-model="numPerPage" ng-options="numPage for numPage in numsForPage" ng-change="changeNum(numPerPage);"></select>
+             itens por página
+           </label>
+         </div>
+         <div class="col-md-6 text-right">
+           <div class="form-inline form-group">
+             <label for="filter-list"></label>
+             <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+                <input type="text"  class="form-control " id="filter-list" placeholder=" Manutenção" ng-model="searchText.nome"/>
+            </div>
+           </div>
+         </div>
+       </div>
+         <table class="table table-hover  table-responsive" width="100%">
+           <thead>
+              <tr>
+                 <th ng-click="sort('data_inicio')">Data Início <span class="glyphicon sort-icon" ng-show="sortKey=='data_inicio'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('data_fim')">Data Fim <span class="glyphicon sort-icon" ng-show="sortKey=='data_fim'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('empresa')">Empresa <span class="glyphicon sort-icon" ng-show="sortKey=='empresa'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('valor')">Valor <span class="glyphicon sort-icon" ng-show="sortKey=='valor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+              </tr>
+           </thead>
+            <tbody>
+               <tr ng-repeat="manutencao in filtered = (manutencoes | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index"  ng-click="verificaManutencao(manutencao)">
+                 <td>{{ manutencao.data_inicio }}</td>
+                 <td>{{ manutencao.data_fim }}</td>
+                 <td>{{ manutencao.empresa }}</td>
+                 <td>{{ manutencao.valor }}</td>
+               </tr>
+            </tbody>
+         </table>
+        <div class="clearfix" ng-show="manutencoes.length > numPerPage">
+          <uib-pagination total-items="filtered.length" ng-model="currentPage" max-size="maxSize" class="pagination-sm pull-right"
+          ng-change="pageChanged(currentPage)" items-per-page="numPerPage" boundary-links="true" rotate="false"
+          previous-text = "Anterior" next-text="Próximo" first-text="Primeiro" last-text="Último"></uib-pagination>
+        </div>
+      </div>
+       <strong>Foram feitas {{manutencoes.length}} manutenções</strong>
+   </div>
+</div>
+
+<button type="button" class="btn btn-default" ng-click="criaManutencao()" data-toggle="tooltip" title="Adicionar nova manutenção">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Adicionar manutenção
+</button>

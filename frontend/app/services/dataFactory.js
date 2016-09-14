@@ -20,7 +20,6 @@
       }).then(function successCallback(response) {
         //merge arrays
         factory[classe] = response.data;
-
         q.resolve('success');
 
       }, function errorCallback(response) {
@@ -36,23 +35,58 @@
       return getUrl('equipamentos', urlpath + 'equipamentos');
     };
 
-    factory.getEquipamentos = function () {
+    factory.getCautelas = function () {
       //promise that the data will load
       return getUrl('cautelas', urlpath + 'cautelas');
     };
 
-    factory.getEquipamentos = function () {
+    factory.getManutencoes = function () {
       //promise that the data will load
       return getUrl('manutencoes', urlpath + 'manutencoes');
     };
 
-    factory.saveUrl = function (data, classe) {
+    function saveUrl (data, url) {
       //promise that the data will load
       var q = $q.defer();
 
       $http({
         method: 'POST',
-        url: url[classe],
+        url: url,
+        data: data,
+      }).then(function successCallback(response) {
+        q.resolve('success');
+
+      }, function errorCallback(response) {
+        //FIXME show message Layer not available
+        q.reject('erro');
+      });
+
+      return q.promise;
+    };
+
+    factory.postEquipamentos = function (data) {
+      //promise that the data will load
+      return saveUrl(data, urlpath + 'equipamentos');
+    };
+
+    factory.postCautelas = function (data) {
+      //promise that the data will load
+      return saveUrl(data, urlpath + 'cautelas');
+    };
+
+    factory.postManutencoes = function (data) {
+      //promise that the data will load
+      return saveUrl(data, urlpath + 'manutencoes');
+    };
+
+
+    function updateUrl (data, url) {
+      //Só pode dar update em 1 record
+      var q = $q.defer();
+
+      $http({
+        method: 'PUT',
+        url: url + '/' + data.id,
         data: data,
       }).then(function successCallback(response) {
         //merge arrays
@@ -66,24 +100,19 @@
       return q.promise;
     };
 
-    factory.updateUrl = function (data, classe) {
-      //Só pode dar update em 1 record
-      var q = $q.defer();
+    factory.putEquipamentos = function (data) {
+      //promise that the data will load
+      return updateUrl(data, urlpath + 'equipamentos');
+    };
 
-      $http({
-        method: 'PUT',
-        url: url[classe] + '/' + data._id,
-        data: data,
-      }).then(function successCallback(response) {
-        //merge arrays
-        q.resolve('success');
+    factory.putCautelas = function (data) {
+      //promise that the data will load
+      return updateUrl(data, urlpath + 'cautelas');
+    };
 
-      }, function errorCallback(response) {
-        //FIXME show message Layer not available
-        q.reject('erro');
-      });
-
-      return q.promise;
+    factory.putManutencoes = function (data) {
+      //promise that the data will load
+      return updateUrl(data, urlpath + 'manutencoes');
     };
 
     return factory;
