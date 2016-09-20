@@ -25,6 +25,10 @@
     operations.postEquipamentos(req, res, req.body, next);
   });
 
+  router.put('/equipamentos/:id', jsonParser, function (req, res, next) {
+    operations.putEquipamentos(req, res, parseInt(req.params.id), req.body, next);
+  });
+
   router.get('/cautelas', function (req, res, next) {
     operations.getCautelas(req, res, next);
   });
@@ -47,6 +51,10 @@
 
   router.put('/manutencoes/:id', jsonParser, function (req, res, next) {
     operations.putManutencoes(req, res, parseInt(req.params.id), req.body, next);
+  });
+
+  router.get('/situacao', function (req, res, next) {
+    operations.getSituacao(req, res, next);
   });
 
   module.exports = router;

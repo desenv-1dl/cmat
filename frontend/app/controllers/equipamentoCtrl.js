@@ -5,22 +5,18 @@
 
     $scope.reload = function () {
       dataFactory.getEquipamentos().then(function success(response) {
-        $scope.equipamentos = dataFactory.equipamentos;
-
-        var situacoes = [
-          {id:1, nome: "Disponível"},
-          {id:2, nome: "Cautelado"},
-          {id:3, nome: "Em manutenção"},
-          {id:4, nome: "Indisponível"},
-        ];
-        $scope.equipamentos.forEach(function(e){
-          situacoes.forEach(function(d){
-            if( d.id === e.situacao){
-              e.situacaoText = d.nome;
-            }
+         dataFactory.getSituacao().then(function success(response) {
+          $scope.equipamentos = dataFactory.equipamentos;
+          $scope.situacao = dataFactory.situacao;
+          
+          $scope.equipamentos.forEach(function(e){
+             $scope.situacao.forEach(function(s){
+              if( s.codigo === e.situacao){
+                e.situacaoText = s.valor;
+              }
+            })
           })
-        })
-
+      })
       }, function error(response) {
         //FIXME
       });
@@ -58,6 +54,11 @@
         templateUrl: 'app/views/modal/criaequip.html',
         controller: 'criaEquipCtrl',
         size: 'lg',
+        resolve: {
+          situacao: function () {
+            return $scope.situacao;
+          },
+        },
       });
 
       modalInstance.result
@@ -104,21 +105,16 @@
   angular.module('cmatApp')
   .controller('equipamentoCtrl', equipamentoCtrl);
 
-  var criaEquipCtrl = function ($scope, $uibModalInstance) {
+  var criaEquipCtrl = function ($scope, $uibModalInstance, situacao) {
 
     $scope.equipamento = {};
 
-    $scope.situacoes = [
-      {id:1, nome: "Disponível"},
-      {id:2, nome: "Cautelado"},
-      {id:3, nome: "Em manutenção"},
-      {id:4, nome: "Indisponível"},
-    ];
+    $scope.situacoes = situacao;
 
     $scope.finaliza = function () {
-      $scope.situacoes.forEach(function(d){
-        if (d.nome === $scope.equipamento.situacaoText.nome) {
-          $scope.equipamento.situacao = d.id;
+      $scope.situacoes.forEach(function(s){
+        if (s.valor === $scope.equipamento.situacaoText.nome) {
+          $scope.equipamento.situacao = s.codigo;
         }
       })
       $uibModalInstance.close({
@@ -131,7 +127,7 @@
     };
   };
 
-  criaEquipCtrl.$inject = ['$scope', '$uibModalInstance'];
+  criaEquipCtrl.$inject = ['$scope', '$uibModalInstance', 'situacao'];
 
   angular.module('cmatApp')
   .controller('criaEquipCtrl', criaEquipCtrl);

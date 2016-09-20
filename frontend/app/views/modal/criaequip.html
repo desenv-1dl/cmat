@@ -34,7 +34,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2">Situação</label>
       <div class="col-sm-10">
-          <select ng-model="equipamento.situacaoText" ng-options="situacao.nome for situacao in situacoes track by situacao.id" required></select>
+          <select ng-model="equipamento.situacaoText" ng-options="situacao.valor for situacao in situacoes track by situacao.codigo" required></select>
       </div>
     </div>
     </form>

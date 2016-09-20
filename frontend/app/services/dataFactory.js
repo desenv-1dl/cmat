@@ -31,18 +31,19 @@
     }
 
     factory.getEquipamentos = function () {
-      //promise that the data will load
       return getUrl('equipamentos', urlpath + 'equipamentos');
     };
 
     factory.getCautelas = function () {
-      //promise that the data will load
       return getUrl('cautelas', urlpath + 'cautelas');
     };
 
     factory.getManutencoes = function () {
-      //promise that the data will load
       return getUrl('manutencoes', urlpath + 'manutencoes');
+    };
+
+    factory.getSituacao = function () {
+      return getUrl('situacao', urlpath + 'situacao');
     };
 
     function saveUrl (data, url) {

@@ -103,7 +103,16 @@
     });
   }
 
+  function getSituacao(req, res, next) {
 
+    db.any('SELECT * FROM situacao')
+      .then(function (data) {
+        res.status(200).json(data);
+      })
+      .catch(function (err) {
+        return next(err);
+      });
+  }
 
   function postEquipamentos(req, res, data, next) {
     if (!data.foto) {
@@ -315,5 +324,6 @@
   module.exports.getManutencoes = getManutencoes;
   module.exports.postManutencoes = postManutencoes;
   module.exports.putManutencoes = putManutencoes;
+  module.exports.getSituacao = getSituacao;
 
 })();
