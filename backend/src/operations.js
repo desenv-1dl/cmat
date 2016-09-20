@@ -153,20 +153,30 @@
       data.data_fim = null;
     }
 
-    db.tx(function (t) {
-        return t.one('INSERT INTO cautela(numero, operador, missao, data_inicio, data_fim)' +
-        'values(${numero}, ${operador}, ${missao}, ${data_inicio}, ${data_fim}) returning id',
-        data).then(function (resp) {
-          var queries = [];
-          data.equipamentos.forEach(function (e) {
-            queries.push(
-              t.none('INSERT INTO cautela_equipamento(equipamento_id, cautela_id)' +
-              'values($1, $2)', [e, resp.id])
-            );
-          });
+    //gera numero da cautela automaticamente. Padrão ANO - nº
 
-          return t.batch(queries);
-        });
+    var anoAtual = new Date().getFullYear();
+    db.tx(function (t) {
+        return db.one('SELECT numero FROM cautela WHERE numero LIKE \'$1-%\' ' +
+              ' ORDER BY numero DESC LIMIT 1', anoAtual)
+          .then(function (result) {
+            data.numero = anoAtual + '-' + (parseInt(result.numero.split('-')[1]) + 1).toString();
+            console.log(data.numero)
+
+            return t.one('INSERT INTO cautela(numero, operador, missao, data_inicio, data_fim, situacao)' +
+            'values(${numero}, ${operador}, ${missao}, ${data_inicio}, ${data_fim}, ${situacao}) returning id',
+            data).then(function (resp) {
+              var queries = [];
+              data.equipamentos.forEach(function (e) {
+                queries.push(
+                  t.none('INSERT INTO cautela_equipamento(equipamento_id, cautela_id)' +
+                  'values($1, $2)', [e, resp.id])
+                );
+              });
+
+              return t.batch(queries);
+            });
+        })
       })
       .then(function () {
         res.status(200)
