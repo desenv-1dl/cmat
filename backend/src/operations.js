@@ -57,8 +57,7 @@
     }).then(function (data) {
       data[0].forEach(function (c) {
         c.equipamentos = [];
-        c.data_inicio = c.data_inicio.toISOString().split('T')[0];
-        c.data_fim = c.data_fim ? c.data_fim.toISOString().split('T')[0] : null;
+
         data[1].forEach(function (e) {
           if (e.cautela_id === c.id) {
             delete e.cautela_id;
@@ -85,8 +84,6 @@
     }).then(function (data) {
       data[0].forEach(function (c) {
         c.equipamentos = [];
-        c.data_inicio = c.data_inicio.toISOString().split('T')[0];
-        c.data_fim = c.data_fim ? c.data_fim.toISOString().split('T')[0] : null;
         data[1].forEach(function (e) {
           if (e.manutencao_id === c.id) {
             delete e.manutencao_id;
@@ -152,6 +149,11 @@
               t.none('INSERT INTO manutencao_equipamento(equipamento_id, manutencao_id)' +
               'values($1, $2)', [e, resp.id])
             );
+            //update da situação dos equipamentos
+            queries.push(
+              t.none('UPDATE equipamento SET situacao=$1 where id=$2', [3, e])
+            );
+
           });
 
           return t.batch(queries);
@@ -180,14 +182,19 @@
 
     var anoAtual = new Date().getFullYear();
     db.tx(function (t) {
-        return t.one('SELECT numero FROM cautela WHERE numero LIKE \'$1-%\' ' +
+        return t.any('SELECT numero FROM cautela WHERE numero LIKE \'$1-%\' ' +
               ' ORDER BY numero DESC LIMIT 1', anoAtual)
           .then(function (result) {
-            data.numero = anoAtual + '-' + (parseInt(result.numero.split('-')[1]) + 1).toString();
+            if(result.length === 0){
+              result = 1;
+            } else {
+              result = (parseInt(result[0].numero.split('-')[1]) + 1).toString();
+            }
+            data.numero = anoAtual + '-' + result;
             console.log(data.numero)
 
             return t.one('INSERT INTO cautela(numero, operador, missao, data_inicio, data_fim, situacao, observacao)' +
-            'values(${numero}, ${operador}, ${missao}, ${data_inicio}, ${data_fim}, ${situacao}, observacao) returning id',
+            'values(${numero}, ${operador}, ${missao}, ${data_inicio}, ${data_fim}, ${situacao}, ${observacao}) returning id',
             data).then(function (resp) {
               var queries = [];
               data.equipamentos.forEach(function (e) {
@@ -317,7 +324,7 @@
 
   module.exports.getEquipamentos = getEquipamentos;
   module.exports.postEquipamentos = postEquipamentos;
-   module.exports.putEquipamentos = putEquipamentos;
+  module.exports.putEquipamentos = putEquipamentos;
   module.exports.getCautelas = getCautelas;
   module.exports.postCautelas = postCautelas;
   module.exports.putCautelas = putCautelas;

@@ -3,12 +3,6 @@
 </div>
 <div class="modal-body">
     <form class="form-horizontal" role="form" name="criaCautelaForm">
-      <div class="form-group">
-        <label class="control-label col-sm-2">Número</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="numero" placeholder="Número da cautela" ng-model="cautela.numero" required>
-        </div>
-      </div>
     <div class="form-group">
       <label class="control-label col-sm-2">Responsável</label>
       <div class="col-sm-10">
@@ -42,18 +36,6 @@
           ng-required="true" current-text="Hoje" clear-text="Remover" close-text="Fechar" />
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-        </p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Data de Fim</label>
-      <div class="col-sm-10">
-        <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup ng-model="cautela.data_fim" is-open="popup2.opened"
-          current-text="Hoje" clear-text="Remover" close-text="Fechar" />
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
         </p>
       </div>

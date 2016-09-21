@@ -10,15 +10,28 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2">Equipamento</label>
+      <label class="control-label col-sm-2">Equipamentos</label>
       <div class="col-sm-10">
-          <select ng-model="manutencao.equipamento" ng-options="equipamento.desc for equipamento in equipamentos track by equipamento.id" required></select>
+        <ui-select multiple tagging="tagTransform" tagging-label="new tag" ng-model="manutencao.eqp" theme="select2" ng-required="true" ng-disabled="disabled" style="width: 400px;">
+          <ui-select-match placeholder="Selecione uma ou mais equipamentos">{{$item.desc}}</ui-select-match>
+          <ui-select-choices repeat="equipamento in equipamentos | propsFilter: {nome: $select.search}">
+            <small>
+              {{equipamento.desc}}
+            </small>
+          </ui-select-choices>
+        </ui-select>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">Empresa</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" name="empresa" placeholder="Tipo" ng-model="manutencao.empresa" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Valor</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" name="valor" placeholder="Valor" ng-model="manutencao.valor" min="0" step="0.01">
       </div>
     </div>
     <div class="form-group">

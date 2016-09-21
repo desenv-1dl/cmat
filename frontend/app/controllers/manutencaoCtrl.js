@@ -74,6 +74,10 @@
 
     dataFactory.getEquipamentos().then(function success(response) {
       $scope.equipamentos = dataFactory.equipamentos;
+      //equipamentos cautelados e em manutenção não podem ser manutenidos
+      $scope.equipamentos = $scope.equipamentos.filter(function(d){
+        return d.situacao != 3 && d.situacao != 4
+      });
       $scope.equipamentos.forEach(function(d){
         d.desc = d.nome + " - " + d.carga;
       })
@@ -81,6 +85,14 @@
       //FIXME
     });
 
+    dataFactory.getEquipamentos().then(function success(response) {
+      $scope.equipamentos = dataFactory.equipamentos;
+      $scope.equipamentos.forEach(function(d){
+        d.desc = d.nome + " - " + d.carga;
+      })
+    }, function error(response) {
+      //FIXME
+    });
 
 
     //datepicker
@@ -101,8 +113,10 @@
       };
 
     $scope.finaliza = function () {
-      $scope.manutencao.equipamento_id = $scope.manutencao.equipamento.id;
-
+      $scope.manutencao.equipamentos = [];
+      $scope.manutencao.eqp.forEach(function(d){
+        $scope.manutencao.equipamentos.push(d.id)
+      })
       $uibModalInstance.close({
         manutencao: $scope.manutencao,
       });

@@ -5,8 +5,18 @@
 
     $scope.reload = function () {
       dataFactory.getCautelas().then(function success(response) {
-        $scope.cautelas = dataFactory.cautelas;
-
+          dataFactory.getSituacao().then(function success(response) {
+          $scope.cautelas = dataFactory.cautelas;
+          $scope.situacao = dataFactory.situacao;
+          
+          $scope.cautelas.forEach(function(e){
+              $scope.situacao.forEach(function(s){
+              if( s.codigo === e.situacao){
+                e.situacaoText = s.valor;
+              }
+            })
+          })
+      })
       }, function error(response) {
         //FIXME
       });
@@ -74,6 +84,10 @@
 
     dataFactory.getEquipamentos().then(function success(response) {
       $scope.equipamentos = dataFactory.equipamentos;
+      //somente equipamentos disponiveis podem ser cautelados
+      $scope.equipamentos = $scope.equipamentos.filter(function(d){
+        return d.situacao == 1;
+      });
       $scope.equipamentos.forEach(function(d){
         d.desc = d.nome + " - " + d.carga;
       })
@@ -86,15 +100,7 @@
         $scope.popup1.opened = true;
       };
 
-      $scope.open2 = function() {
-        $scope.popup2.opened = true;
-      };
-
       $scope.popup1 = {
-        opened: false
-      };
-
-      $scope.popup2 = {
         opened: false
       };
 
@@ -103,7 +109,8 @@
       $scope.cautela.eqp.forEach(function(d){
         $scope.cautela.equipamentos.push(d.id)
       })
-      console.log($scope.cautela)
+      //situacao = 8 (Não enviada)
+      $scope.cautela.situacao = 8;
       $uibModalInstance.close({
         cautela: $scope.cautela,
       });

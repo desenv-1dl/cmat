@@ -29,15 +29,17 @@
                  <th ng-click="sort('data_inicio')">Data Início <span class="glyphicon sort-icon" ng-show="sortKey=='data_inicio'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
                  <th ng-click="sort('data_fim')">Data Fim <span class="glyphicon sort-icon" ng-show="sortKey=='data_fim'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
                  <th ng-click="sort('operador')">Operador <span class="glyphicon sort-icon" ng-show="sortKey=='operador'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                 <th ng-click="sort('situacao')">Operador <span class="glyphicon sort-icon" ng-show="sortKey=='situacao'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
               </tr>
            </thead>
             <tbody>
                <tr ng-repeat="cautela in filtered = (cautelas | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index"  ng-click="verificaCautela(cautela)">
                  <td>{{ cautela.numero }}</td>
                  <td>{{ cautela.missao }}</td>
-                 <td>{{ cautela.data_inicio }}</td>
-                 <td>{{ cautela.data_fim }}</td>
+                 <td>{{ cautela.data_inicio | date: 'dd-MM-yyyy' }}</td>
+                 <td>{{ cautela.data_fim | date: 'dd-MM-yyyy' }}</td>
                  <td>{{ cautela.operador }}</td>
+                 <td>{{ cautela.situacaoText }}</td>
                </tr>
             </tbody>
          </table>

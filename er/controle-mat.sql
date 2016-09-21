@@ -1,12 +1,11 @@
-﻿
-CREATE TABLE situacao(
+﻿CREATE TABLE situacao(
 	id SERIAL NOT NULL PRIMARY KEY UNIQUE,
 	codigo INTEGER UNIQUE,
 	valor VARCHAR(255)
 );
-INSERT INTO situacao (codigo,valor)VALUES
+INSERT INTO situacao (codigo,valor) VALUES
 (1,'Disponível'),
-(2,'Inisponível'),
+(2,'Indisponível'),
 (3,'Em manutenção'),
 (4,'Cautelado'),
 (5,'Finalizada'),
@@ -32,7 +31,7 @@ CREATE TABLE cautela(
 	missao VARCHAR(255),
 	data_inicio DATE NOT NULL,
 	data_fim DATE,
-	situacao SMALLINT REFERENCES situacao(codigo) CHECK (situacao IN(5,6,7,8)),
+	situacao SMALLINT NOT NULL REFERENCES situacao(codigo) CHECK (situacao IN(5,6,7,8)),
 	observacao TEXT
 );
 GRANT ALL ON TABLE cautela TO public;
@@ -67,4 +66,3 @@ CREATE TABLE manutencao_equipamento(
 GRANT ALL ON TABLE manutencao_equipamento TO public;
 --CREATE TABLE documento(
 --);
-commit;

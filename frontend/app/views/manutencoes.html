@@ -32,8 +32,8 @@
            </thead>
             <tbody>
                <tr ng-repeat="manutencao in filtered = (manutencoes | filter: searchText) | orderBy:sortKey:reverse | startFrom: (currentPage-1)*numPerPage | limitTo: numPerPage track by $index"  ng-click="verificaManutencao(manutencao)">
-                 <td>{{ manutencao.data_inicio }}</td>
-                 <td>{{ manutencao.data_fim }}</td>
+                 <td>{{ manutencao.data_inicio | date: 'dd-MM-yyyy' }}</td>
+                 <td>{{ manutencao.data_fim | date: 'dd-MM-yyyy' }}</td>
                  <td>{{ manutencao.empresa }}</td>
                  <td>{{ manutencao.valor }}</td>
                </tr>

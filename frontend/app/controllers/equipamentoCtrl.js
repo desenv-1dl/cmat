@@ -109,14 +109,13 @@
 
     $scope.equipamento = {};
 
-    $scope.situacoes = situacao;
+    $scope.situacoes = situacao.filter(function(d){
+      return d.valor === 'Disponível' || d.valor === 'Indisponível'
+    });
 
     $scope.finaliza = function () {
-      $scope.situacoes.forEach(function(s){
-        if (s.valor === $scope.equipamento.situacaoText.nome) {
-          $scope.equipamento.situacao = s.codigo;
-        }
-      })
+      $scope.equipamento.situacao = $scope.equipamento.situacaoText.codigo;
+
       $uibModalInstance.close({
         equipamento: $scope.equipamento,
       });
